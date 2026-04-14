@@ -234,17 +234,17 @@ git commit -m "feat: generate deterministic reachable maps"
 - Create: `src/test/java/dev/ytype/jacuum/web/MapControllerTest.java`
 - Modify: `docs/progress.md`
 
-- [ ] **Step 1: Write failing controller tests**
+- [x] **Step 1: Write failing controller tests**
 
 Test `POST /api/maps` with explicit hash and `small` preset returns the same JSON on repeated calls. Test request without hash returns a non-blank generated hash.
 
-- [ ] **Step 2: Run focused test**
+- [x] **Step 2: Run focused test**
 
 Run: `.\mvnw -Dtest=MapControllerTest test`
 
 Expected: failure because controller does not exist.
 
-- [ ] **Step 3: Implement controller and DTOs**
+- [x] **Step 3: Implement controller and DTOs**
 
 Expose:
 
@@ -257,13 +257,13 @@ Content-Type: application/json
 
 Return hash, size, width, height, start coordinate, and tile matrix.
 
-- [ ] **Step 4: Run focused test**
+- [x] **Step 4: Run focused test**
 
 Run: `.\mvnw -Dtest=MapControllerTest test`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add src/main/java/dev/ytype/jacuum/web src/test/java/dev/ytype/jacuum/web docs/progress.md

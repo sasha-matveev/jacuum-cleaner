@@ -64,3 +64,19 @@ Planning is complete. The next step is to choose an execution approach before im
 - Added focused coverage for equal maps on repeated generation, different hashes producing different layouts, reachability, boundary walls, and the `TINY` preset producing floor tiles.
 - Verified `.\mvnw -Dtest=MapGeneratorTest test`.
 - Verified `.\mvnw test`.
+
+### Phase 2, Task 2.2
+
+- Added `POST /api/maps` with a thin Spring MVC controller and request/response DTOs.
+- The endpoint now creates deterministic maps from a supplied hash and size preset, and generates a new non-blank hash when the request omits one.
+- The response includes hash, size, width, height, start coordinate, and a simple floor/wall tile matrix for the browser UI.
+- Added focused MVC coverage for repeated requests with the same hash and preset plus hash generation when the request omits a hash.
+- Verified `.\mvnw -Dtest=MapControllerTest test`.
+- Verified `.\mvnw test`.
+
+### Phase 2, Task 2.2 Review Fix
+
+- Made the null-request-body path explicit in `MapController` so `POST /api/maps` with JSON body `null` returns a deliberate `400 Bad Request` with a request-body message.
+- Strengthened `MapControllerTest` with JSON-path assertions for the explicit hash and `small` response shape, plus invalid-input coverage for missing size, blank size, unknown preset, null body, malformed JSON, and blank hash.
+- Verified `.\mvnw -Dtest=MapControllerTest test`.
+- Verified `.\mvnw test`.
