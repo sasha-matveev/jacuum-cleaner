@@ -191,7 +191,7 @@ Value: users and tests can generate repeatable reachable rooms from hash and siz
 - Create: `src/test/java/dev/ytype/jacuum/mapgen/MapGeneratorTest.java`
 - Modify: `docs/progress.md`
 
-- [ ] **Step 1: Write failing tests**
+- [x] **Step 1: Write failing tests**
 
 Cover:
 
@@ -201,23 +201,23 @@ Cover:
 - every outside boundary behaves as a wall
 - single `TINY` map has at least one floor tile
 
-- [ ] **Step 2: Run focused test**
+- [x] **Step 2: Run focused test**
 
 Run: `.\mvnw -Dtest=MapGeneratorTest test`
 
 Expected: compilation failure.
 
-- [ ] **Step 3: Implement generator**
+- [x] **Step 3: Implement generator**
 
 Use a deterministic `java.util.Random` seeded from SHA-256 of `hash + ":" + preset.name()`. Generate a rectangular room per preset, carve an irregular but connected floor area, add bounded internal obstacles only if reachability remains valid, and choose a deterministic start floor tile.
 
-- [ ] **Step 4: Run focused test**
+- [x] **Step 4: Run focused test**
 
 Run: `.\mvnw -Dtest=MapGeneratorTest test`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add src/main/java/dev/ytype/jacuum/mapgen src/test/java/dev/ytype/jacuum/mapgen docs/progress.md

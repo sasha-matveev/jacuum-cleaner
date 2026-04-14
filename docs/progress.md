@@ -55,3 +55,12 @@ Planning is complete. The next step is to choose an execution approach before im
 - Added focused coverage for floor and wall lookup, directional wall detection, reachable floor count, defensive copying, invalid inputs, and explicit null behavior on `Coordinate.move` and `RoomMap.hasWall`.
 - Verified `.\mvnw -Dtest=DomainModelTest test`.
 - Verified `.\mvnw test`.
+
+### Phase 2, Task 2.1
+
+- Added deterministic map generation in `mapgen` with SHA-256 seeding from `hash + ":" + preset.name()`.
+- Generated rooms stay inside the outer boundary, keep the start tile on floor, and are validated for full reachability before returning.
+- Added `MapValidator` reachability and boundary checks plus a small `GeneratedMap` value object for returning the generated hash, preset, and `RoomMap`.
+- Added focused coverage for equal maps on repeated generation, different hashes producing different layouts, reachability, boundary walls, and the `TINY` preset producing floor tiles.
+- Verified `.\mvnw -Dtest=MapGeneratorTest test`.
+- Verified `.\mvnw test`.
