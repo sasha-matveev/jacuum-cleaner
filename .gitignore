@@ -1,4 +1,6 @@
 .idea/
 .worktrees/
+.m2/
+.mvn/wrapper/dists/
 target/
 jacuum-leaderboard.json

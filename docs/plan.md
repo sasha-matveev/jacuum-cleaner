@@ -61,7 +61,7 @@ Value: the project builds, tests run, and core value objects exist.
 - Create: `src/main/resources/application.properties`
 - Modify: `docs/progress.md`
 
-- [ ] **Step 1: Create Maven project files**
+- [x] **Step 1: Create Maven project files**
 
 Use Spring Boot `4.0.5`, Java `21`, and dependencies:
 
@@ -84,7 +84,7 @@ Use Spring Boot `4.0.5`, Java `21`, and dependencies:
 </dependencies>
 ```
 
-- [ ] **Step 2: Add application entry point**
+- [x] **Step 2: Add application entry point**
 
 ```java
 package dev.ytype.jacuum;
@@ -100,17 +100,17 @@ public class VacuumCleanerApplication {
 }
 ```
 
-- [ ] **Step 3: Run tests**
+- [x] **Step 3: Run tests**
 
 Run: `.\mvnw test`
 
 Expected: build succeeds with no tests or one generated context test if added.
 
-- [ ] **Step 4: Update progress log**
+- [x] **Step 4: Update progress log**
 
 Append a Phase 1 entry to `docs/progress.md` with scaffold status and command output summary.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add pom.xml mvnw mvnw.cmd .mvn src/main docs/progress.md

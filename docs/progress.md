@@ -22,3 +22,20 @@
 ### Current Safepoint
 
 Planning is complete. The next step is to choose an execution approach before implementation begins.
+
+### Phase 1, Task 1.1
+
+- Scaffolded the Maven Spring Boot project with Java 21 and Spring Boot 4.0.5.
+- Added the application entry point at `src/main/java/dev/ytype/jacuum/VacuumCleanerApplication.java`.
+- Added empty `src/main/resources/application.properties`.
+- Generated a real Maven Wrapper setup with `maven-wrapper.jar` and canonical launcher scripts.
+- Kept the wrapper distribution cache and Maven local repository inside the worktree so `.\mvnw test` works without a global Maven install.
+- Test command: `.\mvnw test`
+- Result: `BUILD SUCCESS`
+- Summary: no tests were present, so Maven reported `No tests to run.`
+
+### Phase 1, Quality Fix
+
+- Added `.m2/` and `.mvn/wrapper/dists/` to `.gitignore` so wrapper caches stay ignored after local test runs.
+- Verified `.\mvnw test` still passes with the wrapper cache and local Maven repository in the worktree.
+- Verified `git status --short --ignored` shows `.m2/`, `.mvn/wrapper/dists/`, and `target/` as ignored entries (`!!`).
