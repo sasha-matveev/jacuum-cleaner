@@ -80,3 +80,21 @@ Planning is complete. The next step is to choose an execution approach before im
 - Strengthened `MapControllerTest` with JSON-path assertions for the explicit hash and `small` response shape, plus invalid-input coverage for missing size, blank size, unknown preset, null body, malformed JSON, and blank hash.
 - Verified `.\mvnw -Dtest=MapControllerTest test`.
 - Verified `.\mvnw test`.
+
+### Phase 3, Task 3.1
+
+- Added the public robot algorithm contract in `RobotAlgorithm` with the documented `Direction next(TileView tile)` signature.
+- Added `@RobotAlgo` as a Spring component stereotype carrying algorithm metadata for discovery.
+- Added `AlgorithmDescriptor` and `AlgorithmRegistry` so the application can list registered algorithms and create a fresh instance by id.
+- Added sample prototype-scoped algorithms: `RandomWalkAlgorithm`, `AlwaysLeftAlgorithm`, and `WallFollowerAlgorithm`.
+- Added focused registry coverage to verify the registered ids and fresh-instance creation behavior.
+- Verified `.\mvnw -Dtest=AlgorithmRegistryTest test`.
+- Verified `.\mvnw test`.
+
+### Phase 3, Task 3.1 Review Fix
+
+- Moved prototype scope to the `@RobotAlgo` meta-annotation so freshness is enforced by the algorithm API instead of per-class annotations.
+- Removed redundant `@Scope("prototype")` annotations from the sample algorithms.
+- Extended the registry test to verify the `@RobotAlgo` scope metadata and to assert that the sample algorithms do not declare explicit scope annotations.
+- Verified `.\mvnw -Dtest=AlgorithmRegistryTest test`.
+- Verified `.\mvnw test`.

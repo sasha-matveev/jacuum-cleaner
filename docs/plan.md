@@ -290,17 +290,17 @@ Value: registered algorithms can run against maps with validated movement, score
 - Create: `src/test/java/dev/ytype/jacuum/algo/AlgorithmRegistryTest.java`
 - Modify: `docs/progress.md`
 
-- [ ] **Step 1: Write failing registry tests**
+- [x] **Step 1: Write failing registry tests**
 
 Verify registered sample algorithm ids include `random-walk`, `always-left`, and `wall-follower`. Verify each algorithm can be created as a fresh instance.
 
-- [ ] **Step 2: Run focused test**
+- [x] **Step 2: Run focused test**
 
 Run: `.\mvnw -Dtest=AlgorithmRegistryTest test`
 
 Expected: failure.
 
-- [ ] **Step 3: Implement API**
+- [x] **Step 3: Implement API**
 
 Document the interface:
 
@@ -316,13 +316,13 @@ public interface RobotAlgorithm {
 
 Use `@RobotAlgo(id = "...", name = "...", description = "...")` on Spring components and have `AlgorithmRegistry` expose descriptors plus factory access.
 
-- [ ] **Step 4: Run focused test**
+- [x] **Step 4: Run focused test**
 
 Run: `.\mvnw -Dtest=AlgorithmRegistryTest test`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add src/main/java/dev/ytype/jacuum/algo src/test/java/dev/ytype/jacuum/algo docs/progress.md
