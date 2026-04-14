@@ -341,7 +341,7 @@ git commit -m "feat: register robot algorithms"
 - Create: `src/test/java/dev/ytype/jacuum/engine/SampleAlgorithmSmokeTest.java`
 - Modify: `docs/progress.md`
 
-- [ ] **Step 1: Write failing engine tests**
+- [x] **Step 1: Write failing engine tests**
 
 Cover:
 
@@ -353,23 +353,23 @@ Cover:
 - algorithm exception ends with `FAILED` and zero score
 - trace captures requested direction and resulting coordinate
 
-- [ ] **Step 2: Run focused test**
+- [x] **Step 2: Run focused test**
 
 Run: `.\mvnw -Dtest=RunEngineTest,SampleAlgorithmSmokeTest test`
 
 Expected: failure.
 
-- [ ] **Step 3: Implement engine**
+- [x] **Step 3: Implement engine**
 
 Keep engine independent from controllers and leaderboard. `RunSession.step(int count)` advances virtual iterations and returns a `RunResult`. If an algorithm throws, catch it, set status `FAILED`, clear score to zero, and stop.
 
-- [ ] **Step 4: Run focused test**
+- [x] **Step 4: Run focused test**
 
 Run: `.\mvnw -Dtest=RunEngineTest,SampleAlgorithmSmokeTest test`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add src/main/java/dev/ytype/jacuum/engine src/test/java/dev/ytype/jacuum/engine docs/progress.md
@@ -403,7 +403,7 @@ Verify:
 - `POST /api/runs/{id}/stop` marks an active run as interrupted
 - unknown algorithm returns HTTP 400
 
-- [ ] **Step 2: Run focused test**
+- [x] **Step 2: Run focused test**
 
 Run: `.\mvnw -Dtest=RunControllerTest test`
 
@@ -413,13 +413,13 @@ Expected: failure.
 
 Use an in-memory `RunStore` keyed by UUID for local sessions. This is acceptable because saved leaderboard traces provide persistence; active runs do not need restart recovery.
 
-- [ ] **Step 4: Run focused test**
+- [x] **Step 4: Run focused test**
 
 Run: `.\mvnw -Dtest=RunControllerTest test`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add src/main/java/dev/ytype/jacuum/web src/test/java/dev/ytype/jacuum/web docs/progress.md
@@ -446,7 +446,7 @@ Value: a user can configure a scene, run an algorithm, watch smooth movement, pa
 
 Verify `GET /` returns HTML and static resources are served.
 
-- [ ] **Step 2: Run focused test**
+- [x] **Step 2: Run focused test**
 
 Run: `.\mvnw -Dtest=StaticUiTest test`
 
@@ -468,7 +468,7 @@ UI controls:
 
 Use `localStorage` keys prefixed with `jacuum.`.
 
-- [ ] **Step 4: Run focused test**
+- [x] **Step 4: Run focused test**
 
 Run: `.\mvnw -Dtest=StaticUiTest test`
 
@@ -510,7 +510,7 @@ Value: completed runs can be saved locally, replayed from trace, and retried wit
 
 Verify configured temp file saves and loads entries. Verify absent path uses no-op repository and does not fail. Verify default `jacuum-leaderboard.json` is used when present in the working directory.
 
-- [ ] **Step 2: Run focused test**
+- [x] **Step 2: Run focused test**
 
 Run: `.\mvnw -Dtest=LeaderboardRepositoryTest test`
 
@@ -520,13 +520,13 @@ Expected: failure.
 
 Use Jackson to store an array of entries in JSON. Write atomically by serializing to a temporary file in the same directory and moving it into place.
 
-- [ ] **Step 4: Run focused test**
+- [x] **Step 4: Run focused test**
 
 Run: `.\mvnw -Dtest=LeaderboardRepositoryTest test`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add src/main/java/dev/ytype/jacuum/leaderboard src/test/java/dev/ytype/jacuum/leaderboard src/main/resources/application.properties docs/progress.md
@@ -553,7 +553,7 @@ Verify:
 - failed runs are rejected with HTTP 400
 - `GET /api/leaderboard/{id}/replay` returns trace data
 
-- [ ] **Step 2: Run focused test**
+- [x] **Step 2: Run focused test**
 
 Run: `.\mvnw -Dtest=LeaderboardControllerTest test`
 
@@ -569,7 +569,7 @@ Run: `.\mvnw -Dtest=LeaderboardControllerTest,StaticUiTest test`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add src/main/java/dev/ytype/jacuum/web src/test/java/dev/ytype/jacuum/web src/main/resources/static docs/progress.md
@@ -700,3 +700,4 @@ Placeholder scan:
 Type consistency:
 
 - Shared names use the approved spec terms: `Direction`, `TileView`, `RoomMap`, `SizePreset`, `TraceStep`, `RunStatus`, `RunResult`, `RobotAlgorithm`, and `AlgorithmRegistry`.
+

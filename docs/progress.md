@@ -98,3 +98,15 @@ Planning is complete. The next step is to choose an execution approach before im
 - Extended the registry test to verify the `@RobotAlgo` scope metadata and to assert that the sample algorithms do not declare explicit scope annotations.
 - Verified `.\mvnw -Dtest=AlgorithmRegistryTest test`.
 - Verified `.\mvnw test`.
+
+### Phase 3, Task 3.2
+
+- Added `RunEngine`, `RunSession`, `RunRequest`, `RunResult`, and `ScoreCalculator` to run algorithms against maps without web or persistence dependencies.
+- Start tiles are cleaned immediately, blocked and successful moves record trace steps, algorithm exceptions fail the run with zero score, and score is recalculated from cleaned tiles and iterations used.
+- Added engine coverage for immediate start cleaning, blocked movement, successful movement, score calculation, all-clean completion, failure handling, and trace capture.
+- Added smoke coverage for the sample algorithms on square room, corridor, loop route, internal obstacle room, and single-tile room maps.
+- Verified `.\mvnw clean "-Dtest=RunEngineTest,SampleAlgorithmSmokeTest" test`.
+- Verified `.\mvnw test`.
+- Result: `BUILD SUCCESS`.
+- Note: Maven printed existing Mockito and Byte Buddy dynamic-agent warnings during the full suite, but the build still passed.
+
