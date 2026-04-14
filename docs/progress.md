@@ -39,3 +39,19 @@ Planning is complete. The next step is to choose an execution approach before im
 - Added `.m2/` and `.mvn/wrapper/dists/` to `.gitignore` so wrapper caches stay ignored after local test runs.
 - Verified `.\mvnw test` still passes with the wrapper cache and local Maven repository in the worktree.
 - Verified `git status --short --ignored` shows `.m2/`, `.mvn/wrapper/dists/`, and `target/` as ignored entries (`!!`).
+
+### Phase 1, Task 1.2
+
+- Added immutable domain types: `Direction`, `Coordinate`, `SizePreset`, `RunStatus`, `TraceStep`, `TileView`, and `RoomMap`.
+- Added focused test coverage in `DomainModelTest` for coordinate movement and size preset defaults.
+- Verified `.\mvnw -Dtest=DomainModelTest test` after implementing the domain types.
+- Verified `.\mvnw test` passes for the full suite.
+- Notes: `RoomMap` is immutable, requires the start tile to be a floor tile, and exposes directional wall checks for future engine and algorithm work.
+
+### Phase 1, Task 1.2 Review Fix
+
+- Corrected `docs/plan.md` so only Task 1.1 and Task 1.2 stay checked; later phase checkboxes are back to unchecked.
+- Tightened `RoomMap` validation to reject null inputs, null floor entries, out-of-bounds floor tiles, and invalid dimensions while keeping the start-tile check.
+- Added focused coverage for floor and wall lookup, directional wall detection, reachable floor count, defensive copying, invalid inputs, and explicit null behavior on `Coordinate.move` and `RoomMap.hasWall`.
+- Verified `.\mvnw -Dtest=DomainModelTest test`.
+- Verified `.\mvnw test`.

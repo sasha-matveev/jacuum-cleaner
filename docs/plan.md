@@ -131,7 +131,7 @@ git commit -m "chore: scaffold spring boot project"
 - Create: `src/test/java/dev/ytype/jacuum/domain/DomainModelTest.java`
 - Modify: `docs/progress.md`
 
-- [ ] **Step 1: Write failing domain tests**
+- [x] **Step 1: Write failing domain tests**
 
 Test exact behavior:
 
@@ -152,23 +152,23 @@ void sizePresetExposesStableDefaults() {
 }
 ```
 
-- [ ] **Step 2: Run test to verify failure**
+- [x] **Step 2: Run test to verify failure**
 
 Run: `.\mvnw -Dtest=DomainModelTest test`
 
 Expected: compilation fails because domain classes do not exist.
 
-- [ ] **Step 3: Implement minimal domain types**
+- [x] **Step 3: Implement minimal domain types**
 
 Use immutable records and enums. `RoomMap` must expose `isFloor(Coordinate)`, `isWall(Coordinate)`, `hasWall(Coordinate, Direction)`, and `reachableFloorCount()`.
 
-- [ ] **Step 4: Run test to verify pass**
+- [x] **Step 4: Run test to verify pass**
 
 Run: `.\mvnw -Dtest=DomainModelTest test`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add src/main/java/dev/ytype/jacuum/domain src/test/java/dev/ytype/jacuum/domain docs/progress.md
