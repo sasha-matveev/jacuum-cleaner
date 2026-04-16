@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip -o /tmp/spring-init.zip -d /tmp/spring-extracted)",
+      "Bash(curl -v \"https://start.spring.io/starter.zip?type=maven-project&language=java&bootVersion=3.4.4&baseDir=app&groupId=com.jacuum&artifactId=jacuum-cleaner&name=JacuumCleaner&packageName=com.jacuum&javaVersion=21&dependencies=web,data-jpa,h2,lombok\" -o /tmp/spring-init.zip)",
+      "Bash(java -version)",
+      "Bash(mvn -version)",
+      "Bash(mvn compile:*)",
+      "Bash(mvn test:*)",
+      "Bash(mvn spring-boot:run -q)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)",
+      "Bash(curl -s http://localhost:8080/api/algos)",
+      "Bash(curl -s -X POST http://localhost:8080/api/game/start -H 'Content-Type: application/json' -d '{\"hash\":\"test-seed\",\"size\":\"tiny\",\"algoId\":\"Random\",\"username\":\"TestBot\",\"avatar\":\"🤖\",\"maxIterations\":50}')",
+      "Bash(python -m json.tool)",
+      "Bash(curl:*)",
+      "Bash(pkill -f \"jacuum-cleaner\")",
+      "Bash(taskkill /F /IM java.exe)"
+    ]
+  }
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jacuum Cleaner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Jacuum <span>Cleaner</span></h1>
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="setup">Setup</button>
+      <button class="tab-btn" data-tab="game">Game</button>
+      <button class="tab-btn" data-tab="leaderboard" id="lb-tab">Leaderboard</button>
+    </nav>
+  </header>
+
+  <!-- ===== SETUP TAB ===== -->
+  <div id="setup-pane" class="tab-pane active">
+
+    <div class="setup-card">
+      <h2>Map &amp; Session</h2>
+
+      <div class="field">
+        <label>Map Hash (leave blank for random)</label>
+        <div class="hash-row">
+          <input id="hash-input" type="text" placeholder="e.g. my-map-seed-42">
+          <button class="icon-btn" id="random-hash-btn" title="Generate random hash">&#9684; Random</button>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Map Size</label>
+          <select id="size-select">
+            <option value="tiny">Tiny</option>
+            <option value="small">Small</option>
+            <option value="medium" selected>Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Algorithm</label>
+          <select id="algo-select">
+            <option value="">Loading...</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Iterations Budget</label>
+        <div class="iter-slider-wrap">
+          <input type="range" id="iter-slider" min="0" max="5" step="1" value="2">
+          <div class="iter-ticks">
+            <span>100</span><span>250</span><span>500</span><span>1000</span><span>2500</span><span>5000</span>
+          </div>
+        </div>
+        <div style="text-align:center;color:var(--accent);font-weight:700;margin-top:4px" id="iter-display">500</div>
+      </div>
+    </div>
+
+    <div class="setup-card">
+      <h2>Player</h2>
+
+      <div class="field">
+        <label>Username (blank = random hero)</label>
+        <div class="hash-row">
+          <input id="username-input" type="text" placeholder="e.g. HeroBot9000">
+          <button class="icon-btn" id="random-name-btn" title="Clear for random">&#9702; Random</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Robot Avatar</label>
+        <div class="avatar-grid" id="avatar-grid"></div>
+      </div>
+
+      <button class="btn-primary" id="start-btn">&#9654; Launch Game</button>
+    </div>
+  </div>
+
+  <!-- ===== GAME TAB ===== -->
+  <div id="game-pane" class="tab-pane">
+
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat">
+        <span class="stat-label">Player</span>
+        <span class="stat-value" id="stat-player">—</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Avatar</span>
+        <span class="stat-value" id="stat-avatar">—</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Cleaned</span>
+        <span class="stat-value accent" id="stat-cleaned">0 / 0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Score</span>
+        <span class="stat-value success" id="stat-score">0</span>
+      </div>
+      <div class="iter-bar-wrap">
+        <div class="iter-bar-bg"><div class="iter-bar-fill" id="iter-fill" style="width:0%"></div></div>
+        <div class="iter-bar-label" id="iter-bar-label">0 / 0</div>
+      </div>
+    </div>
+
+    <div class="canvas-wrap">
+      <canvas id="game-canvas"></canvas>
+    </div>
+
+    <div class="controls">
+      <button class="ctrl-btn active" id="btn-run" disabled>&#9654; Run</button>
+      <button class="ctrl-btn" id="btn-pause" disabled>&#9646;&#9646; Pause</button>
+      <button class="ctrl-btn danger" id="btn-abort" disabled>&#9632; Abort</button>
+      <div style="flex:1"></div>
+      <span class="speed-label">Speed</span>
+      <div class="speed-dots" id="speed-dots">
+        <div class="speed-dot" data-level="1"></div>
+        <div class="speed-dot" data-level="2"></div>
+        <div class="speed-dot active" data-level="3"></div>
+        <div class="speed-dot" data-level="4"></div>
+        <div class="speed-dot" data-level="5"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== LEADERBOARD TAB ===== -->
+  <div id="leaderboard-pane" class="tab-pane">
+    <h2>Leaderboard</h2>
+    <div id="lb-content">
+      <p class="lb-empty">Loading...</p>
+    </div>
+  </div>
+</div>
+
+<!-- End Game Overlay -->
+<div id="end-overlay" class="hidden">
+  <div class="end-card">
+    <h2 id="end-title">Finished!</h2>
+    <div class="big-score" id="end-score">0</div>
+    <div class="end-stats" id="end-stats"></div>
+    <div class="end-actions">
+      <button id="btn-save-lb">Save to Leaderboard</button>
+      <button id="btn-retry">&#8635; Retry Same Map</button>
+      <button class="primary" id="btn-new-game">&#9654; New Game</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
