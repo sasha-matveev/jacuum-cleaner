@@ -36,7 +36,7 @@ public final class SpringAlgorithms implements Algorithms {
         throw new Exception("Unknown algorithm: " + name);
     }
 
-    private static String displayName(Object bean) {
+    private String displayName(final Object bean) {
         RobotAlgorithm ann = bean.getClass().getAnnotation(RobotAlgorithm.class);
         String v = ann.value();
         return v.isBlank() ? bean.getClass().getSimpleName() : v;

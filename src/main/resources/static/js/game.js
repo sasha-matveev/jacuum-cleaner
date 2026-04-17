@@ -52,29 +52,31 @@ const Game = (() => {
     drawMap();
     drawRobot(robotX, robotY);
 
-    document.getElementById('btn-pause').onclick  = () => Api.pause(sessionId);
+    document.getElementById('btn-pause').onclick  = () => Api.pause(sessionId)
+      .then(() => { document.getElementById('btn-pause').disabled  = true;
+                    document.getElementById('btn-resume').disabled = false; });
     document.getElementById('btn-resume').onclick = () => Api.resume(sessionId)
       .then(() => { document.getElementById('btn-resume').disabled = true;
                     document.getElementById('btn-pause').disabled  = false; });
     document.getElementById('btn-stop').onclick   = () => Api.stop(sessionId);
     document.getElementById('btn-save-lb').onclick = saveLb;
-
-    Api.pause = (id) => fetch(`/api/session/${id}/pause`, {method:'POST'}).then(r => r.json())
-      .then(() => { document.getElementById('btn-pause').disabled  = true;
-                    document.getElementById('btn-resume').disabled = false; });
   }
 
   function initReplay(session, body, trace) {
     init(session, body);
     setTimeout(() => {
       if (stompClient) stompClient.deactivate();
-      eventQueue = trace.map(t => ({
-        robotX: t.x, robotY: t.y, score: t.score,
-        iteration: t.iteration, direction: t.direction,
-        totalCleaned: 0, totalFloor: mapData.totalFloor,
-        finished: t.iteration === trace.length,
-        finishReason: t.iteration === trace.length ? 'COMPLETED' : null,
-      }));
+      const replaySet = new Set();
+      eventQueue = trace.map(t => {
+        replaySet.add(t.x + ',' + t.y);
+        return {
+          robotX: t.x, robotY: t.y, score: t.score,
+          iteration: t.iteration, direction: t.direction,
+          totalCleaned: replaySet.size, totalFloor: mapData.totalFloor,
+          finished: t.iteration === trace.length,
+          finishReason: t.iteration === trace.length ? 'COMPLETED' : null,
+        };
+      });
       drainQueue();
     }, 500);
   }

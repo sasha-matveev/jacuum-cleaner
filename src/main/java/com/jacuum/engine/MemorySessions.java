@@ -107,9 +107,12 @@ public final class MemorySessions implements Sessions {
 
     @Override public void pause(String id)  throws Exception { require(id).status = RunStatus.PAUSED; }
     @Override public void resume(String id) throws Exception { require(id).status = RunStatus.RUNNING; }
-    @Override public void stop(String id)   throws Exception {
-        ActiveSession s = require(id);
-        finish(s, FinishReason.INTERRUPTED);
+    @Override public void stop(final String id) throws Exception {
+        final ActiveSession s = require(id);
+        synchronized (s) {
+            if (s.status == RunStatus.FINISHED) return;
+            finish(s, FinishReason.INTERRUPTED);
+        }
         if (s.future != null) s.future.interrupt();
     }
 

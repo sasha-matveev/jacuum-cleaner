@@ -95,7 +95,7 @@ public final class SessionEndpoint {
             map.startX(), map.startY(), map.totalFloorTiles(), iters);
     }
 
-    private static SizePreset sizeFrom(final String s) {
+    private SizePreset sizeFrom(final String s) {
         if (s == null || s.isBlank()) return SizePreset.SMALL;
         try {
             return SizePreset.valueOf(s.toUpperCase());
