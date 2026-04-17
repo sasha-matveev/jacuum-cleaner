@@ -43,9 +43,10 @@ public final class MemorySessions implements Sessions {
         if (s.future != null) s.future.cancel(true);
     }
 
+    // package-private: used by the game loop (added in Task 8) within the engine package
     ActiveSession require(String id) throws Exception {
         ActiveSession s = store.get(id);
-        if (s == null) throw new IllegalArgumentException("Unknown session: " + id);
+        if (s == null) throw new Exception("Unknown session: " + id);
         return s;
     }
 }
