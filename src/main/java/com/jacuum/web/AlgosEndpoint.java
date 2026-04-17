@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public final class AlgosEndpoint {
+public final class AlgosEndpoint implements AlgosApi {
 
     private final Algorithms algorithms;
 

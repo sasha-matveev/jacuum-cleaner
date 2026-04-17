@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/leaderboard")
-public final class LeaderboardEndpoint {
+public final class LeaderboardEndpoint implements LeaderboardApi {
 
     private final Leaderboard leaderboard;
 

@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @Configuration(proxyBeanMethods = false)
-public final class AppConfig {
+public final class AppConfig implements Config {
 
     @Bean
     public Maps maps() {

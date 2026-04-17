@@ -25,7 +25,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/session")
-public final class SessionEndpoint {
+public final class SessionEndpoint implements SessionApi {
 
     private final Sessions sessions;
     private final Maps maps;
