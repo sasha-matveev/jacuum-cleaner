@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn --version)",
+      "Bash(mvn wrapper:wrapper)",
+      "Bash(mvn compile:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(./mvnw.cmd test:*)",
+      "Bash(./mvnw.cmd compile:*)",
+      "Bash(./mvnw compile:*)",
+      "Bash(git:*)",
+      "Bash(./mvnw test:*)",
+      "Bash(mvn test:*)",
+      "Bash(mvn clean:*)",
+      "Bash(./mvnw clean:*)",
+      "Bash(curl -L \"https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js\" -o src/main/resources/static/lib/sockjs.min.js)",
+      "Bash(curl -L \"https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js\" -o src/main/resources/static/lib/stomp.min.js)",
+      "Bash(tee test-output.log)",
+      "Bash(xargs grep:*)"
+    ]
+  }
+}

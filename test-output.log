@@ -1,0 +1,83 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< com.jacuum:jacuum-cleaner >----------------------
+[INFO] Building jacuum-cleaner 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ jacuum-cleaner ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 9 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ jacuum-cleaner ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ jacuum-cleaner ---
+[INFO] skip non existing resourceDirectory C:\Users\ytype\dev\projects\jacuum-cleaner\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ jacuum-cleaner ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ jacuum-cleaner ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.jacuum.algo.AlgoSmokeTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.142 s -- in com.jacuum.algo.AlgoSmokeTest
+[INFO] Running com.jacuum.algo.DirectionTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.jacuum.algo.DirectionTest
+[INFO] Running com.jacuum.engine.GameLoopTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.192 s -- in com.jacuum.engine.GameLoopTest
+[INFO] Running com.jacuum.engine.MemorySessionsTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in com.jacuum.engine.MemorySessionsTest
+[INFO] Running com.jacuum.map.CellularMapsTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in com.jacuum.map.CellularMapsTest
+[INFO] Running com.jacuum.map.GeneratedMapTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.jacuum.map.GeneratedMapTest
+[INFO] Running com.jacuum.web.AlgosEndpointTest
+21:55:00.274 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.jacuum.web.AlgosEndpointTest]: AlgosEndpointTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:55:00.403 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.jacuum.JacuumApplication for test class com.jacuum.web.AlgosEndpointTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-04-17T21:55:00.843+02:00  INFO 17024 --- [           main] com.jacuum.web.AlgosEndpointTest         : Starting AlgosEndpointTest using Java 21.0.10 with PID 17024 (started by ytype in C:\Users\ytype\dev\projects\jacuum-cleaner)
+2026-04-17T21:55:00.844+02:00  INFO 17024 --- [           main] com.jacuum.web.AlgosEndpointTest         : No active profile set, falling back to 1 default profile: "default"
+2026-04-17T21:55:00.987+02:00  WARN 17024 --- [           main] o.s.c.a.AnnotationBeanNameGenerator      : Support for convention-based stereotype names is deprecated and will be removed in a future version of the framework. Please annotate the 'value' attribute in @com.jacuum.algo.RobotAlgorithm with @AliasFor(annotation=Component.class) to declare an explicit alias for @Component's 'value' attribute.
+2026-04-17T21:55:02.116+02:00  INFO 17024 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-04-17T21:55:02.338+02:00  INFO 17024 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-04-17T21:55:02.339+02:00  INFO 17024 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-04-17T21:55:02.341+02:00  INFO 17024 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-04-17T21:55:02.360+02:00  INFO 17024 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-04-17T21:55:02.364+02:00  INFO 17024 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@69f2cb04]]
+2026-04-17T21:55:02.365+02:00  INFO 17024 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-04-17T21:55:02.371+02:00  INFO 17024 --- [           main] com.jacuum.web.AlgosEndpointTest         : Started AlgosEndpointTest in 1.83 seconds (process running for 3.276)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\ytype\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.19\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.237 s -- in com.jacuum.web.AlgosEndpointTest
+[INFO] Running com.jacuum.web.SessionEndpointTest
+2026-04-17T21:55:03.321+02:00  INFO 17024 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.jacuum.web.SessionEndpointTest]: SessionEndpointTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-17T21:55:03.325+02:00  INFO 17024 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.jacuum.JacuumApplication for test class com.jacuum.web.SessionEndpointTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.135 s -- in com.jacuum.web.SessionEndpointTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 31, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.390 s
+[INFO] Finished at: 2026-04-17T21:55:03+02:00
+[INFO] ------------------------------------------------------------------------

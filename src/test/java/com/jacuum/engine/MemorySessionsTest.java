@@ -33,7 +33,7 @@ class MemorySessionsTest {
     }
 
     @Test void sessionCapRejected() throws Exception {
-        Sessions sessions = new MemorySessions(null, null, 2);
+        Sessions sessions = new MemorySessions(new SilentMessaging(), null, 2);
         sessions.open(smallMap(), "RandomAlgo", "Alice", "🤖", 100);
         sessions.open(smallMap(), "RandomAlgo", "Bob", "🤖", 100);
         assertThatThrownBy(() -> sessions.open(smallMap(), "RandomAlgo", "Charlie", "🤖", 100))
