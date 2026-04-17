@@ -32,6 +32,7 @@ final class ActiveSession {
         this.robotX               = map.startX();
         this.robotY               = map.startY();
         this.status               = RunStatus.SETUP;
+        this.future               = Thread.ofVirtual().start(() -> {});
     }
 
     SessionView toView() {

@@ -15,7 +15,7 @@ class MemorySessionsTest {
     }
 
     @Test void openCreatesSessionInSetupState() throws Exception {
-        Sessions sessions = new MemorySessions(null, null, 50); // no messaging in unit test
+        Sessions sessions = new MemorySessions(new SilentMessaging(), null, 50); // no messaging in unit test
         String id = sessions.open(smallMap(), "RandomAlgo", "Alice", "🤖", 100);
         assertThat(id).isNotBlank();
         SessionView view = sessions.view(id);
@@ -27,7 +27,7 @@ class MemorySessionsTest {
     }
 
     @Test void viewThrowsForUnknownId() {
-        Sessions sessions = new MemorySessions(null, null, 50);
+        Sessions sessions = new MemorySessions(new SilentMessaging(), null, 50);
         assertThatThrownBy(() -> sessions.view("nope"))
             .isInstanceOf(Exception.class);
     }
@@ -42,14 +42,14 @@ class MemorySessionsTest {
     }
 
     @Test void pauseRequiresRunningState() throws Exception {
-        Sessions sessions = new MemorySessions(null, null, 50);
+        Sessions sessions = new MemorySessions(new SilentMessaging(), null, 50);
         String id = sessions.open(smallMap(), "RandomAlgo", "Alice", "🤖", 100);
         assertThatThrownBy(() -> sessions.pause(id))
             .isInstanceOf(Exception.class);
     }
 
     @Test void resumeRequiresPausedState() throws Exception {
-        Sessions sessions = new MemorySessions(null, null, 50);
+        Sessions sessions = new MemorySessions(new SilentMessaging(), null, 50);
         String id = sessions.open(smallMap(), "RandomAlgo", "Alice", "🤖", 100);
         assertThatThrownBy(() -> sessions.resume(id))
             .isInstanceOf(Exception.class);

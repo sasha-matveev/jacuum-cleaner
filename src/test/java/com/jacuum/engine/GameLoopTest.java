@@ -23,7 +23,7 @@ class GameLoopTest {
     }
 
     @Test void robotCleansCorridorMovingEast() throws Exception {
-        MemorySessions sessions = new MemorySessions(null, eastAlways(), 50);
+        MemorySessions sessions = new MemorySessions(new SilentMessaging(), eastAlways(), 50);
         String id = sessions.open(corridor(), "east", "Bot", "🤖", 20);
         sessions.start(id);
 
@@ -46,7 +46,7 @@ class GameLoopTest {
                 return tile -> { throw new RuntimeException("boom"); };
             }
         };
-        MemorySessions sessions = new MemorySessions(null, crashAlgo, 50);
+        MemorySessions sessions = new MemorySessions(new SilentMessaging(), crashAlgo, 50);
         String id = sessions.open(corridor(), "crash", "Bot", "🤖", 20);
         sessions.start(id);
         long deadline = System.currentTimeMillis() + 2000;

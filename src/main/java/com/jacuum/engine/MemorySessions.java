@@ -5,19 +5,19 @@ import com.jacuum.algo.Direction;
 import com.jacuum.algo.RobotAlgo;
 import com.jacuum.map.GameMap;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class MemorySessions implements Sessions {
 
     private final ConcurrentHashMap<String, ActiveSession> store = new ConcurrentHashMap<>();
-    private final SimpMessagingTemplate messaging;
+    private final Messaging messaging;
     private final Algorithms algorithms;
     private final int maxSessions;
 
-    public MemorySessions(SimpMessagingTemplate messaging, Algorithms algorithms,
-                         @Value("${game.max-sessions:50}") int maxSessions) {
+    public MemorySessions(final Messaging messaging, final Algorithms algorithms,
+                         @Value("${game.max-sessions:50}") final int maxSessions) {
         this.messaging = messaging;
         this.algorithms = algorithms;
         this.maxSessions = maxSessions;
@@ -107,14 +107,12 @@ public final class MemorySessions implements Sessions {
             s.cleaned.size(), s.map.totalFloorTiles(),
             true, reason);
         publish(s.id, event);
-        if (messaging != null)
-            messaging.convertAndSend("/topic/session/" + s.id + "/status",
-                new StatusEvent(s.id, RunStatus.FINISHED, reason));
+        messaging.send("/topic/session/" + s.id + "/status",
+            new StatusEvent(s.id, RunStatus.FINISHED, reason));
     }
 
-    private void publish(String sessionId, IterationEvent event) {
-        if (messaging != null)
-            messaging.convertAndSend("/topic/session/" + sessionId + "/events", event);
+    private void publish(final String sessionId, final IterationEvent event) {
+        messaging.send("/topic/session/" + sessionId + "/events", event);
     }
 
     @Override public void pause(String id) throws Exception {
@@ -141,13 +139,12 @@ public final class MemorySessions implements Sessions {
             if (s.status == RunStatus.FINISHED) return;
             finish(s, FinishReason.INTERRUPTED);
         }
-        if (s.future != null) s.future.interrupt();
+        s.future.interrupt();
     }
 
     // package-private: used by the game loop (added in Task 8) within the engine package
-    ActiveSession require(String id) throws Exception {
-        ActiveSession s = store.get(id);
-        if (s == null) throw new Exception("Unknown session: " + id);
-        return s;
+    ActiveSession require(final String id) throws Exception {
+        return Optional.ofNullable(store.get(id))
+            .orElseThrow(() -> new Exception("Unknown session: " + id));
     }
 }

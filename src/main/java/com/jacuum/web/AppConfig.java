@@ -2,6 +2,7 @@ package com.jacuum.web;
 
 import com.jacuum.algo.Algorithms;
 import com.jacuum.algo.SpringAlgorithms;
+import com.jacuum.engine.ActiveMessaging;
 import com.jacuum.engine.MemorySessions;
 import com.jacuum.engine.Sessions;
 import com.jacuum.leaderboard.JsonLeaderboard;
@@ -33,7 +34,7 @@ public final class AppConfig {
     public Sessions sessions(final SimpMessagingTemplate messaging,
                              final Algorithms algorithms,
                              @Value("${game.max-sessions:50}") final int maxSessions) {
-        return new MemorySessions(messaging, algorithms, maxSessions);
+        return new MemorySessions(new ActiveMessaging(messaging), algorithms, maxSessions);
     }
 
     @Bean
