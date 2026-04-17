@@ -41,4 +41,52 @@ class SessionEndpointTest {
         mvc.perform(post("/api/session/" + id + "/start"))
             .andExpect(status().isOk());
     }
+
+    @Test void createSessionWithMissingAlgoNameReturns400() throws Exception {
+        var body = new CreateSessionRequest(null, "TINY", null, "Alice", "🤖", 100);
+        mvc.perform(post("/api/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(body)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test void createSessionWithMissingUsernameReturns400() throws Exception {
+        var body = new CreateSessionRequest(null, "TINY", "Random", null, "🤖", 100);
+        mvc.perform(post("/api/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(body)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test void createSessionWithMissingAvatarReturns400() throws Exception {
+        var body = new CreateSessionRequest(null, "TINY", "Random", "Alice", null, 100);
+        mvc.perform(post("/api/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(body)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test void createSessionWithBlankAlgoNameReturns400() throws Exception {
+        var body = new CreateSessionRequest(null, "TINY", "  ", "Alice", "🤖", 100);
+        mvc.perform(post("/api/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(body)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test void createSessionWithBlankUsernameReturns400() throws Exception {
+        var body = new CreateSessionRequest(null, "TINY", "Random", "  ", "🤖", 100);
+        mvc.perform(post("/api/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(body)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test void createSessionWithBlankAvatarReturns400() throws Exception {
+        var body = new CreateSessionRequest(null, "TINY", "Random", "Alice", "  ", 100);
+        mvc.perform(post("/api/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(body)))
+            .andExpect(status().isBadRequest());
+    }
 }
