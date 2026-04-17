@@ -5,13 +5,14 @@ import com.jacuum.algo.impl.RandomAlgo;
 import com.jacuum.map.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import java.util.Random;
 import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.*;
 
 class AlgoSmokeTest {
 
     static Stream<RobotAlgo> algos() {
-        return Stream.of(new RandomAlgo(), new AlwaysLeftAlgo());
+        return Stream.of(new RandomAlgo(new Random()), new AlwaysLeftAlgo());
     }
 
     static GameMap squareMap() {
