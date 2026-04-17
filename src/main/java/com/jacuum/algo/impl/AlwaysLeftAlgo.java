@@ -1,11 +1,14 @@
 package com.jacuum.algo.impl;
 
 import com.jacuum.algo.*;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 
 /**
  * Prefers WEST (left), then falls back clockwise: WEST → NORTH → EAST → SOUTH.
  * When surrounded by walls, returns WEST (robot stays in place for that iteration).
  */
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @RobotAlgorithm("Always Left")
 public final class AlwaysLeftAlgo implements RobotAlgo {
 

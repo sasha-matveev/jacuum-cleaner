@@ -2,17 +2,20 @@ package com.jacuum.algo.impl;
 
 import com.jacuum.algo.*;
 import java.util.*;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 
 /**
  * Picks uniformly at random from all passable directions (neighbors without walls).
  * When surrounded, picks from all four directions (robot stays in place).
  */
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @RobotAlgorithm("Random")
 public final class RandomAlgo implements RobotAlgo {
     private final Random rng;
 
-    public RandomAlgo(final Random rng) {
-        this.rng = rng;
+    public RandomAlgo() {
+        this.rng = new Random();
     }
 
     @Override

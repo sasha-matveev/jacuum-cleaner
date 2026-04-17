@@ -10,7 +10,6 @@ import com.jacuum.leaderboard.SilentLeaderboard;
 import com.jacuum.map.CellularMaps;
 import com.jacuum.map.Maps;
 import java.nio.file.Path;
-import java.util.Random;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -19,11 +18,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @Configuration(proxyBeanMethods = false)
 public final class AppConfig {
-
-    @Bean
-    public Random random() {
-        return new Random();
-    }
 
     @Bean
     public Maps maps() {
