@@ -7,19 +7,15 @@ import com.jacuum.map.GameMap;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
 
 public final class MemorySessions implements Sessions {
 
     private final ConcurrentHashMap<String, ActiveSession> store = new ConcurrentHashMap<>();
     private final SimpMessagingTemplate messaging;
-    private Algorithms algorithms;
+    private final Algorithms algorithms;
 
-    public MemorySessions(SimpMessagingTemplate messaging) {
+    public MemorySessions(SimpMessagingTemplate messaging, Algorithms algorithms) {
         this.messaging = messaging;
-    }
-
-    public void setAlgorithms(Algorithms algorithms) {
         this.algorithms = algorithms;
     }
 
@@ -40,12 +36,13 @@ public final class MemorySessions implements Sessions {
     @Override
     public void start(String id) throws Exception {
         ActiveSession s = require(id);
-        if (s.status != RunStatus.SETUP && s.status != RunStatus.PAUSED)
-            throw new Exception("Cannot start session in state: " + s.status);
-        s.status = RunStatus.RUNNING;
+        synchronized (s) {
+            if (s.status != RunStatus.SETUP && s.status != RunStatus.PAUSED)
+                throw new Exception("Cannot start session in state: " + s.status);
+            s.status = RunStatus.RUNNING;
+        }
         RobotAlgo algo = algorithms.instantiate(s.algoName);
-        var executor = Executors.newVirtualThreadPerTaskExecutor();
-        s.future = executor.submit(() -> runLoop(s, algo));
+        s.future = Thread.ofVirtual().start(() -> runLoop(s, algo));
     }
 
     private void runLoop(ActiveSession s, RobotAlgo algo) {
@@ -62,10 +59,10 @@ public final class MemorySessions implements Sessions {
                 finish(s, FinishReason.ALGO_CRASH);
                 return;
             }
-            int nx = s.robotX + dir.dx(), ny = s.robotY + dir.dy();
-            if (!s.map.hasWall(s.robotX, s.robotY, dir)) {
-                s.robotX = nx;
-                s.robotY = ny;
+            boolean moved = !s.map.hasWall(s.robotX, s.robotY, dir);
+            if (moved) {
+                s.robotX = s.robotX + dir.dx();
+                s.robotY = s.robotY + dir.dy();
             }
             String key = s.robotX + "," + s.robotY;
             if (!s.cleaned.contains(key)) {
@@ -74,7 +71,7 @@ public final class MemorySessions implements Sessions {
             }
             s.iterationsUsed++;
             IterationEvent event = new IterationEvent(
-                s.id, s.iterationsUsed, dir,
+                s.id, s.iterationsUsed, moved ? dir : null,
                 s.robotX, s.robotY, s.score,
                 s.cleaned.size(), s.map.totalFloorTiles(),
                 false, null);
@@ -112,9 +109,8 @@ public final class MemorySessions implements Sessions {
     @Override public void resume(String id) throws Exception { require(id).status = RunStatus.RUNNING; }
     @Override public void stop(String id)   throws Exception {
         ActiveSession s = require(id);
-        s.status = RunStatus.FINISHED;
-        s.finishReason = FinishReason.INTERRUPTED;
-        if (s.future != null) s.future.cancel(true);
+        finish(s, FinishReason.INTERRUPTED);
+        if (s.future != null) s.future.interrupt();
     }
 
     // package-private: used by the game loop (added in Task 8) within the engine package

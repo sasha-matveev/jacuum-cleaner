@@ -23,8 +23,7 @@ class GameLoopTest {
     }
 
     @Test void robotCleansCorridorMovingEast() throws Exception {
-        MemorySessions sessions = new MemorySessions(null);
-        sessions.setAlgorithms(eastAlways());
+        MemorySessions sessions = new MemorySessions(null, eastAlways());
         String id = sessions.open(corridor(), "east", "Bot", "🤖", 20);
         sessions.start(id);
 
@@ -41,13 +40,13 @@ class GameLoopTest {
     }
 
     @Test void algoCrashFinishesWithZeroScore() throws Exception {
-        MemorySessions sessions = new MemorySessions(null);
-        sessions.setAlgorithms(new Algorithms() {
+        Algorithms crashAlgo = new Algorithms() {
             @Override public java.util.List<String> names() { return java.util.List.of("crash"); }
             @Override public RobotAlgo instantiate(String n) {
                 return tile -> { throw new RuntimeException("boom"); };
             }
-        });
+        };
+        MemorySessions sessions = new MemorySessions(null, crashAlgo);
         String id = sessions.open(corridor(), "crash", "Bot", "🤖", 20);
         sessions.start(id);
         long deadline = System.currentTimeMillis() + 2000;

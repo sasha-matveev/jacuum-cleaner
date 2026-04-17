@@ -3,7 +3,6 @@ package com.jacuum.engine;
 import com.jacuum.map.GameMap;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
 
 final class ActiveSession {
     final String id;
@@ -20,7 +19,7 @@ final class ActiveSession {
     volatile RunStatus status;
     volatile FinishReason finishReason;
     final Set<String> cleaned = ConcurrentHashMap.newKeySet();
-    volatile Future<?> future;
+    volatile Thread future;
 
     ActiveSession(String id, GameMap map, String algoName,
                   String username, String avatar, int iterationsAvailable) {
