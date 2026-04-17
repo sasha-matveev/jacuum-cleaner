@@ -12,7 +12,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class AlgosEndpointTest {
 
-    @Autowired MockMvc mvc;
+    private final MockMvc mvc;
+
+    @Autowired
+    AlgosEndpointTest(final MockMvc mvc) {
+        this.mvc = mvc;
+    }
 
     @Test void algosEndpointReturnsList() throws Exception {
         mvc.perform(get("/api/algos"))

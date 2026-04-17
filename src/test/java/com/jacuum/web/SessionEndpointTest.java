@@ -15,8 +15,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class SessionEndpointTest {
 
-    @Autowired MockMvc mvc;
-    @Autowired ObjectMapper mapper;
+    private final MockMvc mvc;
+    private final ObjectMapper mapper;
+
+    @Autowired
+    SessionEndpointTest(final MockMvc mvc, final ObjectMapper mapper) {
+        this.mvc = mvc;
+        this.mapper = mapper;
+    }
 
     @Test void createSessionReturns200WithSessionId() throws Exception {
         var body = new CreateSessionRequest(null, "TINY", "Random", "Alice", "🤖", 100);
