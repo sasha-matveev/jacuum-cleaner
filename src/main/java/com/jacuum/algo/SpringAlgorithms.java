@@ -26,12 +26,11 @@ public final class SpringAlgorithms implements Algorithms {
     }
 
     @Override
-    public RobotAlgo instantiate(String name) throws Exception {
-        for (Map.Entry<String, Object> e :
+    public RobotAlgo instantiate(final String name) throws Exception {
+        for (final Map.Entry<String, Object> e :
                 ctx.getBeansWithAnnotation(RobotAlgorithm.class).entrySet()) {
             if (displayName(e.getValue()).equals(name)) {
-                return (RobotAlgo) e.getValue().getClass()
-                    .getDeclaredConstructor().newInstance();
+                return (RobotAlgo) ctx.getBean(e.getKey());
             }
         }
         throw new Exception("Unknown algorithm: " + name);
