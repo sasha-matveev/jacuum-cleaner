@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jacuum Cleaner</title>
+  <link rel="stylesheet" href="/css/game.css">
+</head>
+<body>
+
+<nav>
+  <button onclick="App.show('setup')">Setup</button>
+  <button onclick="App.show('leaderboard')">Leaderboard</button>
+</nav>
+
+<!-- Setup Screen -->
+<section id="screen-setup" class="screen">
+  <h2>New Game</h2>
+  <label>Map Hash <input id="map-hash" placeholder="leave blank for random"></label>
+  <label>Size
+    <select id="map-size">
+      <option value="TINY">Tiny</option>
+      <option value="SMALL" selected>Small</option>
+      <option value="MEDIUM">Medium</option>
+      <option value="LARGE">Large</option>
+    </select>
+  </label>
+  <label>Username <input id="username" placeholder="random hero name"></label>
+  <label>Avatar <div id="avatar-picker"></div></label>
+  <label>Algorithm <select id="algo-select"></select></label>
+  <label>Iterations
+    <input type="range" id="iterations-range" min="0" max="4" step="1" value="1">
+    <span id="iterations-label"></span>
+  </label>
+  <button id="btn-start-game">Start Game</button>
+</section>
+
+<!-- Game Screen -->
+<section id="screen-game" class="screen hidden">
+  <div id="game-info">
+    <span>Score: <strong id="score">0</strong></span>
+    <span>Cleaned: <strong id="cleaned">0</strong>/<strong id="total-floor">0</strong></span>
+    <span>Iterations: <strong id="iters-used">0</strong>/<strong id="iters-avail">0</strong></span>
+  </div>
+  <canvas id="game-canvas"></canvas>
+  <div id="game-controls">
+    <button id="btn-pause">Pause</button>
+    <button id="btn-resume" disabled>Resume</button>
+    <button id="btn-stop">Stop</button>
+    <label>Speed
+      <input type="range" id="speed-range" min="0" max="5" step="1" value="2">
+      <span id="speed-label"></span>
+    </label>
+  </div>
+  <div id="finish-panel" class="hidden">
+    <h3>Done! Score: <span id="final-score"></span></h3>
+    <button id="btn-save-lb">Save to Leaderboard</button>
+    <button onclick="App.show('setup')">New Game</button>
+  </div>
+</section>
+
+<!-- Leaderboard Screen -->
+<section id="screen-leaderboard" class="screen hidden">
+  <h2>Leaderboard</h2>
+  <table id="lb-table">
+    <thead><tr>
+      <th>#</th><th>Avatar</th><th>Name</th><th>Map</th>
+      <th>Size</th><th>Algo</th><th>Iter Used/Avail</th><th>Score</th><th>Actions</th>
+    </tr></thead>
+    <tbody id="lb-body"></tbody>
+  </table>
+  <p id="lb-empty" class="hidden">No leaderboard file configured.</p>
+</section>
+
+<script src="/lib/sockjs.min.js"></script>
+<script src="/lib/stomp.min.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/setup.js"></script>
+<script src="/js/game.js"></script>
+<script src="/js/leaderboard.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
