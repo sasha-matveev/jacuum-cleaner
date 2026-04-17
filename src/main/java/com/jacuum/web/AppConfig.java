@@ -31,8 +31,9 @@ public final class AppConfig {
 
     @Bean
     public Sessions sessions(final SimpMessagingTemplate messaging,
-                             final Algorithms algorithms) {
-        return new MemorySessions(messaging, algorithms);
+                             final Algorithms algorithms,
+                             @Value("${game.max-sessions:50}") final int maxSessions) {
+        return new MemorySessions(messaging, algorithms, maxSessions);
     }
 
     @Bean

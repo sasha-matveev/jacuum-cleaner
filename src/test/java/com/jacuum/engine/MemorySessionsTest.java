@@ -15,7 +15,7 @@ class MemorySessionsTest {
     }
 
     @Test void openCreatesSessionInSetupState() throws Exception {
-        Sessions sessions = new MemorySessions(null, null); // no messaging in unit test
+        Sessions sessions = new MemorySessions(null, null, 50); // no messaging in unit test
         String id = sessions.open(smallMap(), "RandomAlgo", "Alice", "🤖", 100);
         assertThat(id).isNotBlank();
         SessionView view = sessions.view(id);
@@ -27,7 +27,7 @@ class MemorySessionsTest {
     }
 
     @Test void viewThrowsForUnknownId() {
-        Sessions sessions = new MemorySessions(null, null);
+        Sessions sessions = new MemorySessions(null, null, 50);
         assertThatThrownBy(() -> sessions.view("nope"))
             .isInstanceOf(Exception.class);
     }
