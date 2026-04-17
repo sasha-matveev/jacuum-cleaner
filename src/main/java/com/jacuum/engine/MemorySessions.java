@@ -27,7 +27,7 @@ public final class MemorySessions implements Sessions {
     public String open(GameMap map, String algoName, String username,
                        String avatar, int iterations) throws Exception {
         if (store.size() >= maxSessions) {
-            throw new Exception("Session cap reached: " + maxSessions);
+            throw new Exception("Session cap reached (" + maxSessions + " max)");
         }
         String id = UUID.randomUUID().toString();
         store.put(id, new ActiveSession(id, map, algoName, username, avatar, iterations));
@@ -134,6 +134,7 @@ public final class MemorySessions implements Sessions {
             s.status = RunStatus.RUNNING;
         }
     }
+
     @Override public void stop(final String id) throws Exception {
         final ActiveSession s = require(id);
         synchronized (s) {

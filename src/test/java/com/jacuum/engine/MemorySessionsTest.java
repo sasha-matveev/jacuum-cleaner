@@ -31,4 +31,27 @@ class MemorySessionsTest {
         assertThatThrownBy(() -> sessions.view("nope"))
             .isInstanceOf(Exception.class);
     }
+
+    @Test void sessionCapRejected() throws Exception {
+        Sessions sessions = new MemorySessions(null, null, 2);
+        sessions.open(smallMap(), "RandomAlgo", "Alice", "🤖", 100);
+        sessions.open(smallMap(), "RandomAlgo", "Bob", "🤖", 100);
+        assertThatThrownBy(() -> sessions.open(smallMap(), "RandomAlgo", "Charlie", "🤖", 100))
+            .isInstanceOf(Exception.class)
+            .hasMessageContaining("Session cap reached");
+    }
+
+    @Test void pauseRequiresRunningState() throws Exception {
+        Sessions sessions = new MemorySessions(null, null, 50);
+        String id = sessions.open(smallMap(), "RandomAlgo", "Alice", "🤖", 100);
+        assertThatThrownBy(() -> sessions.pause(id))
+            .isInstanceOf(Exception.class);
+    }
+
+    @Test void resumeRequiresPausedState() throws Exception {
+        Sessions sessions = new MemorySessions(null, null, 50);
+        String id = sessions.open(smallMap(), "RandomAlgo", "Alice", "🤖", 100);
+        assertThatThrownBy(() -> sessions.resume(id))
+            .isInstanceOf(Exception.class);
+    }
 }
