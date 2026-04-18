@@ -12,11 +12,15 @@ import org.springframework.context.annotation.Scope;
 @RobotAlgorithm("Always Left")
 public final class AlwaysLeftAlgo implements RobotAlgo {
 
+    private final java.util.List<Direction> preference;
+
+    public AlwaysLeftAlgo() {
+        this.preference = java.util.List.of(Direction.WEST, Direction.NORTH, Direction.EAST, Direction.SOUTH);
+    }
+
     @Override
     public Direction next(final Tile tile) {
-        final Direction[] preference =
-            {Direction.WEST, Direction.NORTH, Direction.EAST, Direction.SOUTH};
-        for (final Direction d : preference) {
+        for (final Direction d : this.preference) {
             if (!tile.hasWall(d)) return d;
         }
         return Direction.WEST; // surrounded — stay put next iteration

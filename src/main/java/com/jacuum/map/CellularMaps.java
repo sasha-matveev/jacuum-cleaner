@@ -5,8 +5,13 @@ import java.util.*;
 
 public final class CellularMaps implements Maps {
 
-    private static final int SMOOTHING_PASSES = 5;
-    private static final double FILL_RATIO    = 0.45;
+    private final int smoothingPasses;
+    private final double fillRatio;
+
+    public CellularMaps() {
+        this.smoothingPasses = 5;
+        this.fillRatio = 0.45;
+    }
 
     @Override
     public GameMap generate(String hash, SizePreset size) throws Exception {
@@ -15,7 +20,7 @@ public final class CellularMaps implements Maps {
         int w = size.width(), h = size.height();
 
         boolean[][] floor = initialFloor(rng, w, h);
-        for (int i = 0; i < SMOOTHING_PASSES; i++)
+        for (int i = 0; i < this.smoothingPasses; i++)
             floor = smooth(floor, w, h);
 
         floor = keepLargestRegion(floor, w, h);
@@ -24,22 +29,22 @@ public final class CellularMaps implements Maps {
         return new GeneratedMap(hash, size, floor, start[0], start[1]);
     }
 
-    private static long seedFrom(String hash) {
+    private long seedFrom(String hash) {
         long h = 0xcbf29ce484222325L;
         for (char c : hash.toCharArray())
             h = (h ^ c) * 0x100000001b3L;
         return h;
     }
 
-    private static boolean[][] initialFloor(Random rng, int w, int h) {
+    private boolean[][] initialFloor(Random rng, int w, int h) {
         boolean[][] f = new boolean[h][w];
         for (int y = 1; y < h - 1; y++)
             for (int x = 1; x < w - 1; x++)
-                f[y][x] = rng.nextDouble() > FILL_RATIO;
+                f[y][x] = rng.nextDouble() > this.fillRatio;
         return f;
     }
 
-    private static boolean[][] smooth(boolean[][] f, int w, int h) {
+    private boolean[][] smooth(boolean[][] f, int w, int h) {
         boolean[][] next = new boolean[h][w];
         for (int y = 1; y < h - 1; y++) {
             for (int x = 1; x < w - 1; x++) {
@@ -53,7 +58,7 @@ public final class CellularMaps implements Maps {
         return next;
     }
 
-    private static boolean[][] keepLargestRegion(boolean[][] floor, int w, int h) {
+    private boolean[][] keepLargestRegion(boolean[][] floor, int w, int h) {
         boolean[][] visited = new boolean[h][w];
         List<List<int[]>> regions = new ArrayList<>();
         for (int y = 0; y < h; y++) {
@@ -96,7 +101,7 @@ public final class CellularMaps implements Maps {
         return result;
     }
 
-    private static int[] centroidOfFloor(boolean[][] floor, int w, int h) {
+    private int[] centroidOfFloor(boolean[][] floor, int w, int h) {
         long sx = 0, sy = 0, count = 0;
         for (int y = 0; y < h; y++)
             for (int x = 0; x < w; x++)

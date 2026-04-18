@@ -11,15 +11,16 @@ import java.util.Map;
 public final class SpringAlgorithms implements Algorithms {
 
     private final ApplicationContext ctx;
+    private final Map<String, Object> beans;
 
-    public SpringAlgorithms(ApplicationContext ctx) {
+    public SpringAlgorithms(final ApplicationContext ctx) {
         this.ctx = ctx;
+        this.beans = Map.copyOf(ctx.getBeansWithAnnotation(RobotAlgorithm.class));
     }
 
     @Override
     public List<String> names() {
-        return ctx.getBeansWithAnnotation(RobotAlgorithm.class)
-            .entrySet().stream()
+        return this.beans.entrySet().stream()
             .map(e -> displayName(e.getValue()))
             .sorted()
             .toList();
@@ -27,18 +28,17 @@ public final class SpringAlgorithms implements Algorithms {
 
     @Override
     public RobotAlgo instantiate(final String name) throws Exception {
-        for (final Map.Entry<String, Object> e :
-                ctx.getBeansWithAnnotation(RobotAlgorithm.class).entrySet()) {
+        for (final Map.Entry<String, Object> e : this.beans.entrySet()) {
             if (displayName(e.getValue()).equals(name)) {
-                return (RobotAlgo) ctx.getBean(e.getKey());
+                return (RobotAlgo) this.ctx.getBean(e.getKey());
             }
         }
         throw new Exception("Unknown algorithm: " + name);
     }
 
     private String displayName(final Object bean) {
-        RobotAlgorithm ann = bean.getClass().getAnnotation(RobotAlgorithm.class);
-        String v = ann.value();
+        final RobotAlgorithm ann = bean.getClass().getAnnotation(RobotAlgorithm.class);
+        final String v = ann.value();
         return v.isBlank() ? bean.getClass().getSimpleName() : v;
     }
 }
