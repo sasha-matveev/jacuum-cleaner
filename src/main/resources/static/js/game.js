@@ -37,20 +37,23 @@ const Game = (() => {
       updateSpeedLabel();
     };
 
-    if (stompClient) stompClient.deactivate();
-    stompClient = new StompJs.Client({
-      webSocketFactory: () => new SockJS('/ws'),
-      onConnect: () => {
-        stompClient.subscribe(`/topic/session/${sessionId}/events`, msg => {
-          eventQueue.push(JSON.parse(msg.body));
-          if (!animating) drainQueue();
-        });
-      }
-    });
-    stompClient.activate();
-
     drawMap();
     drawRobot(robotX, robotY);
+
+    if (stompClient) stompClient.deactivate();
+    return new Promise(resolve => {
+      stompClient = new StompJs.Client({
+        webSocketFactory: () => new SockJS('/ws'),
+        onConnect: () => {
+          stompClient.subscribe(`/topic/session/${sessionId}/events`, msg => {
+            eventQueue.push(JSON.parse(msg.body));
+            if (!animating) drainQueue();
+          });
+          resolve();
+        }
+      });
+      stompClient.activate();
+    });
 
     document.getElementById('btn-pause').onclick  = () => Api.pause(sessionId)
       .then(() => { document.getElementById('btn-pause').disabled  = true;
@@ -62,23 +65,21 @@ const Game = (() => {
     document.getElementById('btn-save-lb').onclick = saveLb;
   }
 
-  function initReplay(session, body, trace) {
-    init(session, body);
-    setTimeout(() => {
-      if (stompClient) stompClient.deactivate();
-      const replaySet = new Set();
-      eventQueue = trace.map(t => {
-        replaySet.add(t.x + ',' + t.y);
-        return {
-          robotX: t.x, robotY: t.y, score: t.score,
-          iteration: t.iteration, direction: t.direction,
-          totalCleaned: replaySet.size, totalFloor: mapData.totalFloor,
-          finished: t.iteration === trace.length,
-          finishReason: t.iteration === trace.length ? 'COMPLETED' : null,
-        };
-      });
-      drainQueue();
-    }, 500);
+  async function initReplay(session, body, trace) {
+    await init(session, body);
+    stompClient.deactivate();
+    const replaySet = new Set();
+    eventQueue = trace.map(t => {
+      replaySet.add(t.x + ',' + t.y);
+      return {
+        robotX: t.x, robotY: t.y, score: t.score,
+        iteration: t.iteration, direction: t.direction,
+        totalCleaned: replaySet.size, totalFloor: mapData.totalFloor,
+        finished: t.iteration === trace.length,
+        finishReason: t.iteration === trace.length ? 'COMPLETED' : null,
+      };
+    });
+    drainQueue();
   }
 
   function drainQueue() {

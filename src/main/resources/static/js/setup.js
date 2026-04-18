@@ -81,8 +81,8 @@ const Setup = (() => {
       };
       try {
         const session = await Api.createSession(body);
-        Game.init(session, body);
         App.show('game');
+        await Game.init(session, body);
         await Api.start(session.sessionId);
       } catch (e) {
         alert('Failed to start: ' + e.message);

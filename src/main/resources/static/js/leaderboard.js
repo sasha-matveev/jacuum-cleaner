@@ -67,8 +67,8 @@ const Leaderboard = (() => {
     });
     const fakeBody = { hash: e.mapHash, size: e.mapSize, algoName: e.algoName,
                        username: e.username, avatar: e.avatar };
-    Game.initReplay(session, fakeBody, e.trace);
     App.show('game');
+    await Game.initReplay(session, fakeBody, e.trace);
   }
 
   async function retry(e) {
