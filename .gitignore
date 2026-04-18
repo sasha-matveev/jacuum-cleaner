@@ -4,3 +4,4 @@ target/
 *.iml
 node/
 node_modules/
+.worktrees/
