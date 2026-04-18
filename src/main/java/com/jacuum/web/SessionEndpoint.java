@@ -1,6 +1,5 @@
 package com.jacuum.web;
 
-import com.jacuum.algo.Direction;
 import com.jacuum.engine.Sessions;
 import com.jacuum.engine.SessionView;
 import com.jacuum.map.GameMap;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,12 +26,15 @@ public final class SessionEndpoint implements SessionApi {
 
     private final Sessions sessions;
     private final Maps maps;
+    private final Snapshots snapshots;
     private final int defaultIterations;
 
     public SessionEndpoint(final Sessions sessions, final Maps maps,
+                           final Snapshots snapshots,
                            @Value("${game.default-iterations:500}") final int defaultIterations) {
         this.sessions = sessions;
         this.maps = maps;
+        this.snapshots = snapshots;
         this.defaultIterations = defaultIterations;
     }
 
@@ -93,20 +93,7 @@ public final class SessionEndpoint implements SessionApi {
 
     private SessionResponse toResponse(final String id, final GameMap map, final int iters)
             throws Exception {
-        final List<MapSnapshot.TileSnapshot> tiles = new ArrayList<>();
-        for (int y = 0; y < map.height(); y++) {
-            for (int x = 0; x < map.width(); x++) {
-                if (map.isFloor(x, y)) {
-                    tiles.add(new MapSnapshot.TileSnapshot(x, y,
-                        map.hasWall(x, y, Direction.NORTH),
-                        map.hasWall(x, y, Direction.SOUTH),
-                        map.hasWall(x, y, Direction.EAST),
-                        map.hasWall(x, y, Direction.WEST)));
-                }
-            }
-        }
-        final MapSnapshot snap = new MapSnapshot(map.width(), map.height(),
-            map.startX(), map.startY(), map.totalFloorTiles(), tiles);
+        final MapSnapshot snap = this.snapshots.of(map);
         return new SessionResponse(id, "SETUP", snap,
             map.startX(), map.startY(), map.totalFloorTiles(), iters);
     }

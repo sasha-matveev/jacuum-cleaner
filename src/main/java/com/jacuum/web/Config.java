@@ -11,4 +11,5 @@ interface Config {
     Sessions sessions(org.springframework.messaging.simp.SimpMessagingTemplate messaging,
                       Algorithms algorithms, int maxSessions);
     Leaderboard leaderboard(String path);
+    Snapshots snapshots();
 }

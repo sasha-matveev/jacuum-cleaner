@@ -43,4 +43,9 @@ public final class AppConfig implements Config {
         if (path.isBlank()) return new SilentLeaderboard();
         return new JsonLeaderboard(Path.of(path));
     }
+
+    @Bean
+    public Snapshots snapshots() {
+        return new GameMapSnapshots();
+    }
 }
