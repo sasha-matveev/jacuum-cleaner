@@ -166,7 +166,11 @@ const Game = (() => {
       })),
     };
     await Api.saveToLb(entry);
-    alert('Saved!');
+    const btn = document.getElementById('btn-save-lb');
+    const original = btn.textContent;
+    btn.textContent = 'Saved!';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 2000);
   }
 
   return { init, initReplay };

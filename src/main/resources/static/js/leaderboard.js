@@ -1,4 +1,6 @@
 const Leaderboard = (() => {
+  let lbEntries = [];
+
   async function load() {
     const entries = await Api.leaderboard().catch(() => null);
     const tbody   = document.getElementById('lb-body');
@@ -10,26 +12,54 @@ const Leaderboard = (() => {
     }
     empty.classList.add('hidden');
     const sorted = [...entries].sort((a, b) => b.score - a.score);
-    tbody.innerHTML = sorted.map((e, i) => `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${e.avatar}</td>
-        <td>${e.username}</td>
-        <td><code>${(e.mapHash || '').slice(0, 8)}</code></td>
-        <td>${e.mapSize}</td>
-        <td>${e.algoName}</td>
-        <td>${e.iterationsUsed} / ${e.iterationsAvailable}</td>
-        <td><strong>${e.score}</strong></td>
-        <td>
-          <button onclick="Leaderboard.replay(${i})">Replay</button>
-          <button onclick="Leaderboard.retry(${i})">Retry</button>
-        </td>
-      </tr>`).join('');
-    window._lbEntries = sorted;
+    lbEntries = sorted;
+
+    tbody.innerHTML = '';
+    sorted.forEach((e, i) => {
+      const tr = document.createElement('tr');
+      const cells = [
+        String(i + 1),
+        e.avatar,
+        e.username,
+        (e.mapHash || '').slice(0, 8),
+        e.mapSize,
+        e.algoName,
+        `${e.iterationsUsed} / ${e.iterationsAvailable}`,
+        String(e.score),
+      ];
+      cells.forEach((text, colIdx) => {
+        const td = document.createElement('td');
+        if (colIdx === 7) { // score — bold
+          const strong = document.createElement('strong');
+          strong.textContent = text;
+          td.appendChild(strong);
+        } else if (colIdx === 3) { // mapHash — code
+          const code = document.createElement('code');
+          code.textContent = text;
+          td.appendChild(code);
+        } else {
+          td.textContent = text;
+        }
+        tr.appendChild(td);
+      });
+
+      // Action buttons
+      const actionTd = document.createElement('td');
+      const replayBtn = document.createElement('button');
+      replayBtn.textContent = 'Replay';
+      const retryBtn = document.createElement('button');
+      retryBtn.textContent = 'Retry';
+      replayBtn.addEventListener('click', () => replay(e));
+      retryBtn.addEventListener('click', () => retry(e));
+      actionTd.appendChild(replayBtn);
+      actionTd.appendChild(retryBtn);
+      tr.appendChild(actionTd);
+
+      tbody.appendChild(tr);
+    });
   }
 
-  async function replay(idx) {
-    const e = window._lbEntries[idx];
+  async function replay(e) {
     const session = await Api.createSession({
       hash: e.mapHash, size: e.mapSize,
       algoName: e.algoName, username: e.username,
@@ -41,8 +71,7 @@ const Leaderboard = (() => {
     App.show('game');
   }
 
-  async function retry(idx) {
-    const e       = window._lbEntries[idx];
+  async function retry(e) {
     document.getElementById('map-hash').value  = e.mapHash;
     document.getElementById('map-size').value  = e.mapSize;
     const ITER_VALUES = [250, 500, 1000, 2000, 5000];

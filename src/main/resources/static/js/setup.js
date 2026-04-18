@@ -2,6 +2,7 @@ const Setup = (() => {
   const ITER_VALUES = [250, 500, 1000, 2000, 5000];
   const PREFS_KEY   = 'jacuum_prefs';
   let selectedAvatar = '🤖';
+  let pendingAlgo = null;
 
   function savePrefs() {
     localStorage.setItem(PREFS_KEY, JSON.stringify({
@@ -23,11 +24,11 @@ const Setup = (() => {
       if (p.iters !== undefined) document.getElementById('iterations-range').value = p.iters;
       if (p.avatar)   selectedAvatar = p.avatar;
       if (p.algo)     pendingAlgo = p.algo;
-    } catch (_) {}
+    } catch (err) {
+      console.warn('Failed to load preferences:', err);
+    }
     updateIterLabel();
   }
-
-  let pendingAlgo = null;
 
   function updateIterLabel() {
     const idx = parseInt(document.getElementById('iterations-range').value);
