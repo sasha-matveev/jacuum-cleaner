@@ -10,27 +10,27 @@ import java.util.List;
 
 public final class JsonLeaderboard implements Leaderboard {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper()
-        .enable(SerializationFeature.INDENT_OUTPUT);
-    private static final TypeReference<List<LeaderboardEntry>> TYPE =
-        new TypeReference<>() {};
-
     private final Path file;
+    private final ObjectMapper mapper;
+    private final TypeReference<List<LeaderboardEntry>> type;
 
     public JsonLeaderboard(final Path file) {
         this.file = file;
+        this.mapper = new ObjectMapper()
+            .enable(SerializationFeature.INDENT_OUTPUT);
+        this.type = new TypeReference<>() {};
     }
 
     @Override
-    public List<LeaderboardEntry> entries() throws Exception {
-        if (!Files.exists(file)) return List.of();
-        return MAPPER.readValue(file.toFile(), TYPE);
+    public synchronized List<LeaderboardEntry> entries() throws Exception {
+        if (!Files.exists(this.file)) return List.of();
+        return this.mapper.readValue(this.file.toFile(), this.type);
     }
 
     @Override
-    public void save(final LeaderboardEntry entry) throws Exception {
+    public synchronized void save(final LeaderboardEntry entry) throws Exception {
         final List<LeaderboardEntry> current = new ArrayList<>(entries());
         current.add(entry);
-        MAPPER.writeValue(file.toFile(), current);
+        this.mapper.writeValue(this.file.toFile(), current);
     }
 }
