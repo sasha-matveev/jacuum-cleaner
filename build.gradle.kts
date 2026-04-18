@@ -5,6 +5,8 @@ plugins {
     id("com.github.node-gradle.node") version "7.1.0"
 }
 
+import com.github.gradle.node.npm.task.NpmTask
+
 group = "com.jacuum"
 version = "0.0.1-SNAPSHOT"
 
@@ -32,7 +34,7 @@ node {
     nodeProjectDir = file("${project.projectDir}")
 }
 
-val npmRunTest by tasks.registering(com.github.gradle.node.npm.task.NpmTask::class) {
+val npmRunTest by tasks.registering(NpmTask::class) {
     args = listOf("test")
     dependsOn(tasks.named("npmInstall"))
 }

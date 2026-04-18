@@ -2,15 +2,15 @@
 
 ## Running the app
 ```bash
-./mvnw spring-boot:run
+./gradlew bootRun
 # or with leaderboard file:
-./mvnw spring-boot:run -Dspring-boot.run.arguments="--leaderboard.file=./leaderboard.json"
+./gradlew bootRun --args="--leaderboard.file=./leaderboard.json"
 ```
 Open http://localhost:8080
 
 ## Running tests
 ```bash
-./mvnw test
+./gradlew test
 ```
 
 ## Adding a new algorithm
