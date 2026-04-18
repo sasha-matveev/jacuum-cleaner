@@ -2,7 +2,8 @@
 
 **Date:** 2026-04-18  
 **Status:** Approved  
-**Branch strategy:** One branch per phase, each merged before the next begins
+**Base branch:** `claude-powered`  
+**Branch strategy:** Feature branches named `feature/cld-pow-<slug>` branched from and merged back to `claude-powered`. One branch per phase (and sub-branches per package within Phase 2 if desired). `claude-powered` is never merged to `main` as part of this migration.
 
 ---
 
