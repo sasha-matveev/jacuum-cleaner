@@ -17,7 +17,9 @@
       "Bash(curl -L \"https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js\" -o src/main/resources/static/lib/sockjs.min.js)",
       "Bash(curl -L \"https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js\" -o src/main/resources/static/lib/stomp.min.js)",
       "Bash(tee test-output.log)",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "Bash(curl:*)",
+      "Bash(npm test:*)"
     ]
   }
 }

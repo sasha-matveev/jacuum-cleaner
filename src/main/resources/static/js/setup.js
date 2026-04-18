@@ -58,7 +58,7 @@ const Setup = (() => {
     const algos  = await Api.algos();
     const sel    = document.getElementById('algo-select');
     sel.innerHTML = algos.map(a => `<option value="${a}">${a}</option>`).join('');
-    if (pendingAlgo) sel.value = pendingAlgo;
+    // Note: do NOT apply pendingAlgo here — loadPrefs() sets it below
 
     // Random username placeholder
     const HEROES = ['Luke Skywalker','Leia Organa','Han Solo','Rey','Din Djarin','Obi-Wan Kenobi'];
@@ -66,6 +66,7 @@ const Setup = (() => {
       document.getElementById('username').placeholder = HEROES[Math.floor(Math.random() * HEROES.length)];
 
     loadPrefs();
+    if (pendingAlgo) sel.value = pendingAlgo;  // apply AFTER loadPrefs() has set it
 
     document.getElementById('btn-start-game').addEventListener('click', async () => {
       savePrefs();

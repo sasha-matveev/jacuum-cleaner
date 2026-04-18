@@ -1,6 +1,7 @@
 package com.jacuum.algo;
 
 import com.jacuum.algo.impl.AlwaysLeftAlgo;
+import com.jacuum.algo.impl.FrontierAlgo;
 import com.jacuum.algo.impl.RandomAlgo;
 import com.jacuum.map.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 class AlgoSmokeTest {
 
     static Stream<RobotAlgo> algos() {
-        return Stream.of(new RandomAlgo(), new AlwaysLeftAlgo());
+        return Stream.of(new RandomAlgo(), new AlwaysLeftAlgo(), new FrontierAlgo());
     }
 
     static GameMap squareMap() {

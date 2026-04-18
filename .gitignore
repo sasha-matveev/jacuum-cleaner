@@ -2,3 +2,5 @@ target/
 *.class
 *.jar
 *.iml
+node/
+node_modules/

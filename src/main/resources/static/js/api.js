@@ -19,3 +19,4 @@ const Api = (() => {
     }).then(json),
   };
 })();
+if (typeof module !== 'undefined') module.exports = Api;
