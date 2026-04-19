@@ -1,5 +1,3 @@
-import com.github.gradle.node.npm.task.NpmTask
-
 plugins {
     kotlin("jvm") version "2.0.21"
     kotlin("plugin.spring") version "2.0.21"
@@ -34,12 +32,29 @@ node {
     version = "20.17.0"
     download = true
     workDir = file("${project.projectDir}/.gradle/nodejs")
-    nodeProjectDir = file("${project.projectDir}")
+    nodeProjectDir = file("${project.projectDir}/src/main/frontend")
 }
 
-val npmRunTest by tasks.registering(NpmTask::class) {
+val npmRunBuild by tasks.registering(com.github.gradle.node.npm.task.NpmTask::class) {
+    args = listOf("run", "build")
+    dependsOn(tasks.named("npmInstall"))
+    inputs.dir("src/main/frontend/src")
+    inputs.file("src/main/frontend/package.json")
+    inputs.file("src/main/frontend/vite.config.ts")
+    outputs.dir(layout.buildDirectory.dir("frontend"))
+}
+
+val npmRunTest by tasks.registering(com.github.gradle.node.npm.task.NpmTask::class) {
     args = listOf("test")
     dependsOn(tasks.named("npmInstall"))
+}
+
+tasks.processResources {
+    dependsOn(npmRunBuild)
+    exclude("static/index.html", "static/js/**", "static/css/**", "static/lib/**")
+    from(layout.buildDirectory.dir("frontend")) {
+        into("static")
+    }
 }
 
 tasks.test {
