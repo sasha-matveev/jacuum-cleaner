@@ -1,6 +1,6 @@
 package com.jacuum.algo
 
-interface RobotAlgo {
+fun interface RobotAlgo {
     @Throws(Exception::class)
     fun next(tile: Tile): Direction
 }
