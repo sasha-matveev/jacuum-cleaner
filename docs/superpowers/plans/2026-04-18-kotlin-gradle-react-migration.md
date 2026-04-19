@@ -73,7 +73,7 @@ src/main/frontend/
 
 **Files:** Create `settings.gradle.kts`
 
-- [ ] Create `settings.gradle.kts`:
+- [x] Create `settings.gradle.kts`:
 ```kotlin
 rootProject.name = "jacuum-cleaner"
 ```
@@ -84,7 +84,7 @@ rootProject.name = "jacuum-cleaner"
 
 **Files:** Create `build.gradle.kts`
 
-- [ ] Create `build.gradle.kts`:
+- [x] Create `build.gradle.kts`:
 ```kotlin
 plugins {
     java
@@ -137,18 +137,18 @@ tasks.test {
 
 **Files:** `gradlew`, `gradlew.bat`, `gradle/wrapper/gradle-wrapper.jar`, `gradle/wrapper/gradle-wrapper.properties`
 
-- [ ] Ensure Gradle 8.x is installed locally, then run:
+- [x] Ensure Gradle 8.x is installed locally, then run:
 ```bash
 gradle wrapper --gradle-version 8.10.2 --distribution-type bin
 ```
-- [ ] Verify these files now exist:
+- [x] Verify these files now exist:
 ```
 gradle/wrapper/gradle-wrapper.jar
 gradle/wrapper/gradle-wrapper.properties
 gradlew
 gradlew.bat
 ```
-- [ ] Confirm `gradle/wrapper/gradle-wrapper.properties` contains:
+- [x] Confirm `gradle/wrapper/gradle-wrapper.properties` contains:
 ```properties
 distributionUrl=https\://services.gradle.org/distributions/gradle-8.10.2-bin.zip
 ```
@@ -159,7 +159,7 @@ distributionUrl=https\://services.gradle.org/distributions/gradle-8.10.2-bin.zip
 
 **Files:** Delete `pom.xml`, `mvnw`, `mvnw.cmd`, `.mvn/`
 
-- [ ] Delete the files:
+- [x] Delete the files:
 ```bash
 rm pom.xml mvnw mvnw.cmd
 rm -rf .mvn
@@ -169,19 +169,19 @@ rm -rf .mvn
 
 ### Task 1.5: Validate and commit Phase 1
 
-- [ ] Run tests:
+- [x] Run tests:
 ```bash
 ./gradlew test
 ```
 Expected: BUILD SUCCESSFUL — all Java JUnit tests pass, Jest tests pass.
 
-- [ ] Commit:
+- [x] Commit:
 ```bash
 git add -A
 git commit -m "build: replace Maven with Gradle + Node plugin (Phase 1)"
 ```
 
-- [ ] Push and open PR from `feature/cld-pow-p1-gradle` → `claude-powered`, merge when green.
+- [x] Push and open PR from `feature/cld-pow-p1-gradle` → `claude-powered`, merge when green.
 
 ---
 
@@ -195,7 +195,7 @@ Create branch `feature/cld-pow-p2-kotlin` from `claude-powered` after Phase 1 me
 
 **Files:** Modify `build.gradle.kts`
 
-- [ ] Replace the `plugins` block:
+- [x] Replace the `plugins` block:
 ```kotlin
 plugins {
     kotlin("jvm") version "2.0.21"
@@ -206,14 +206,14 @@ plugins {
 }
 ```
 
-- [ ] Replace the `java { toolchain {...} }` block:
+- [x] Replace the `java { toolchain {...} }` block:
 ```kotlin
 kotlin {
     jvmToolchain(21)
 }
 ```
 
-- [ ] Add to `dependencies`:
+- [x] Add to `dependencies`:
 ```kotlin
 implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
@@ -221,7 +221,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 ```
 
-- [ ] Run `./gradlew test` — must still pass before any `.java` files are touched.
+- [x] Run `./gradlew test` — must still pass before any `.java` files are touched.
 
 ---
 
@@ -349,11 +349,11 @@ class DirectionTest {
 }
 ```
 
-- [ ] Read `src/test/java/com/jacuum/algo/AlgoSmokeTest.java`, then delete it and create the Kotlin equivalent in `src/test/kotlin/com/jacuum/algo/AlgoSmokeTest.kt` with the same test logic using Kotlin property access on any data objects.
+- [x] Read `src/test/java/com/jacuum/algo/AlgoSmokeTest.java`, then delete it and create the Kotlin equivalent in `src/test/kotlin/com/jacuum/algo/AlgoSmokeTest.kt` with the same test logic using Kotlin property access on any data objects.
 
-- [ ] Run `./gradlew test` — must pass.
+- [x] Run `./gradlew test` — must pass.
 
-- [ ] Commit:
+- [x] Commit:
 ```bash
 git commit -m "refactor: convert com.jacuum.algo to Kotlin"
 ```
@@ -535,11 +535,11 @@ class CellularMaps : Maps {
 }
 ```
 
-- [ ] Read `src/test/java/com/jacuum/map/GeneratedMapTest.java` and `CellularMapsTest.java`, then delete them and create Kotlin equivalents in `src/test/kotlin/com/jacuum/map/` with the same logic using `map.startX()` method-call style (these are interface methods, not Kotlin properties, so no change needed).
+- [x] Read `src/test/java/com/jacuum/map/GeneratedMapTest.java` and `CellularMapsTest.java`, then delete them and create Kotlin equivalents in `src/test/kotlin/com/jacuum/map/` with the same logic using `map.startX()` method-call style (these are interface methods, not Kotlin properties, so no change needed).
 
-- [ ] Run `./gradlew test` — must pass.
+- [x] Run `./gradlew test` — must pass.
 
-- [ ] Commit:
+- [x] Commit:
 ```bash
 git commit -m "refactor: convert com.jacuum.map to Kotlin"
 ```
@@ -639,11 +639,11 @@ class JsonLeaderboard(private val file: Path) : Leaderboard {
 }
 ```
 
-- [ ] Read `src/test/java/com/jacuum/leaderboard/JsonLeaderboardTest.java`, delete it, create `src/test/kotlin/com/jacuum/leaderboard/JsonLeaderboardTest.kt` with the same test logic. Note: `LeaderboardEntry` is now a Kotlin `data class` — in the Kotlin test, access fields as properties (`entry.id`, `entry.score`) not method calls.
+- [x] Read `src/test/java/com/jacuum/leaderboard/JsonLeaderboardTest.java`, delete it, create `src/test/kotlin/com/jacuum/leaderboard/JsonLeaderboardTest.kt` with the same test logic. Note: `LeaderboardEntry` is now a Kotlin `data class` — in the Kotlin test, access fields as properties (`entry.id`, `entry.score`) not method calls.
 
-- [ ] Run `./gradlew test` — must pass.
+- [x] Run `./gradlew test` — must pass.
 
-- [ ] Commit:
+- [x] Commit:
 ```bash
 git commit -m "refactor: convert com.jacuum.leaderboard to Kotlin"
 ```
@@ -1044,9 +1044,9 @@ class MemorySessionsTest {
 }
 ```
 
-- [ ] Run `./gradlew test` — must pass.
+- [x] Run `./gradlew test` — must pass.
 
-- [ ] Commit:
+- [x] Commit:
 ```bash
 git commit -m "refactor: convert com.jacuum.engine to Kotlin with coroutines"
 ```
@@ -1334,11 +1334,11 @@ class SessionEndpoint(
 }
 ```
 
-- [ ] Read each Java test file in `src/test/java/com/jacuum/web/`, then delete them and create Kotlin equivalents in `src/test/kotlin/com/jacuum/web/`. The Spring MockMvc tests use `@SpringBootTest` + `@AutoConfigureMockMvc` — these work identically in Kotlin. Replace `var body = new CreateSessionRequest(...)` with `val body = CreateSessionRequest(...)`. Keep all assertions identical.
+- [x] Read each Java test file in `src/test/java/com/jacuum/web/`, then delete them and create Kotlin equivalents in `src/test/kotlin/com/jacuum/web/`. The Spring MockMvc tests use `@SpringBootTest` + `@AutoConfigureMockMvc` — these work identically in Kotlin. Replace `var body = new CreateSessionRequest(...)` with `val body = CreateSessionRequest(...)`. Keep all assertions identical.
 
-- [ ] Run `./gradlew test` — must pass.
+- [x] Run `./gradlew test` — must pass.
 
-- [ ] Commit:
+- [x] Commit:
 ```bash
 git commit -m "refactor: convert com.jacuum.web to Kotlin"
 ```
@@ -1484,11 +1484,11 @@ class FrontierAlgo : RobotAlgo {
 }
 ```
 
-- [ ] Read `src/test/java/com/jacuum/algo/FrontierAlgoTest.java`, delete it and create `src/test/kotlin/com/jacuum/algo/FrontierAlgoTest.kt` with the same tests.
+- [x] Read `src/test/java/com/jacuum/algo/FrontierAlgoTest.java`, delete it and create `src/test/kotlin/com/jacuum/algo/FrontierAlgoTest.kt` with the same tests.
 
-- [ ] Run `./gradlew test` — must pass.
+- [x] Run `./gradlew test` — must pass.
 
-- [ ] Commit:
+- [x] Commit:
 ```bash
 git commit -m "refactor: convert com.jacuum.algo.impl to Kotlin"
 ```
@@ -1501,7 +1501,7 @@ git commit -m "refactor: convert com.jacuum.algo.impl to Kotlin"
 - Delete `src/main/java/com/jacuum/JacuumApplication.java`
 - Create `src/main/kotlin/com/jacuum/JacuumApplication.kt`
 
-- [ ] Delete `JacuumApplication.java`, create `src/main/kotlin/com/jacuum/JacuumApplication.kt`:
+- [x] Delete `JacuumApplication.java`, create `src/main/kotlin/com/jacuum/JacuumApplication.kt`:
 ```kotlin
 package com.jacuum
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -1515,22 +1515,22 @@ fun main(args: Array<String>) {
 }
 ```
 
-- [ ] Verify no `.java` files remain in `src/main/java/`:
+- [x] Verify no `.java` files remain in `src/main/java/`:
 ```bash
 find src/main/java -name "*.java" | wc -l
 ```
 Expected output: `0`
 
-- [ ] Run `./gradlew test` — must pass.
+- [x] Run `./gradlew test` — must pass.
 
-- [ ] Run the app and verify it starts:
+- [x] Run the app and verify it starts:
 ```bash
 ./gradlew bootRun &
 sleep 10 && curl -s http://localhost:8080/api/algos
 ```
 Expected: JSON array like `["Always Left","Frontier BFS","Random"]`
 
-- [ ] Kill the server, commit:
+- [x] Kill the server, commit:
 ```bash
 git commit -m "refactor: convert JacuumApplication to Kotlin — Phase 2 complete"
 ```
